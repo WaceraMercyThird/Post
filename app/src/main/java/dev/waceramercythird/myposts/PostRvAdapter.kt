@@ -23,16 +23,32 @@ class PostRvAdapter(var postList: List<Post>) :
         var context = holder.itemView.context
         var currentPost = postList.get(position)
         with(holder.binding) {
-            tvUserId.text = currentPost.userId.toString()
-            tvId.text = currentPost.id.toString()
-            tvTitle.text = currentPost.title
-            tvBody.text = currentPost.body
+            tvUserId3.text = currentPost.userId.toString()
+            tvId2.text = currentPost.id.toString()
+            tvTitle3.text = currentPost.title
+            tvBody3.text = currentPost.body
+            cvPost2.setOnClickListener{
+                var intent = Intent(context, CommentActivity::class.java)
+                intent.putExtra("POST_ID", currentPost.id)
+                context.startActivity(intent)
+            }
+            tvBody3.setOnClickListener{
+                var intent = Intent(context, FetchPostActivity::class.java)
+                intent.putExtra("POST_BODY", currentPost.body)
+                context.startActivity(intent)
+            }
+
 //
         }
 
         holder.binding.imgPost.setOnClickListener{
             Toast
                 .makeText(context, "You have clicked on my face", Toast.LENGTH_LONG)
+                .show()
+        }
+        holder.binding.tvBody3.setOnClickListener{
+            Toast
+                .makeText(context, "You have clicked on comment", Toast.LENGTH_LONG)
                 .show()
         }
 

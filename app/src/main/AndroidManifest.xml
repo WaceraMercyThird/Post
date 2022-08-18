@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyPosts">
         <activity
+            android:name=".FetchPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewCommentActivity"
             android:exported="false" />
         <activity

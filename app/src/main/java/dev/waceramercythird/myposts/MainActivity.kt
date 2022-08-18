@@ -1,5 +1,6 @@
 package dev.waceramercythird.myposts
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -19,31 +20,39 @@ class MainActivity : AppCompatActivity() {
         getPost()
     }
     fun getPost(){
-        var retrofit = ApiClient.buildApiClient(ApiInterface::class.java)
-        var request = retrofit.getPost()
+        var apiClient = ApiClient.buildApiClient(ApiInterface::class.java)
+        var request = apiClient.getPost()
 
         request.enqueue(object : Callback<List<Post>> {
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
                 if (response.isSuccessful){
-                    var posts = response.body()
-                    Toast.makeText(baseContext, "fetched ${posts!!.size} post",
-                        Toast.LENGTH_LONG).show()
-
-
-                    var postAdapter = PostRvAdapter(posts)
-                    binding.rvPost.layoutManager= LinearLayoutManager(baseContext)
-                    binding.rvPost.adapter  = postAdapter
+                    val posts = response.body()
+                    if (posts != null){
+                        displayPost(posts)
+                    }
+//                    var posts = response.body()
+//                    Toast.makeText(baseContext, "fetched ${posts!!.size} post",
+//                        Toast.LENGTH_LONG).show()
+//
+//
+//                    var postAdapter = PostRvAdapter(posts)
+//                    binding.rvPost.layoutManager= LinearLayoutManager(baseContext)
+//                    binding.rvPost.adapter  = postAdapter
                 }
             }
 
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-
+                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
             }
         })
     }
 
 
-
+fun displayPost(postsList: List<Post>){
+    binding.rvPost.layoutManager = LinearLayoutManager(this)
+    var postsAdapter = PostRvAdapter (postsList)
+    binding.rvPost.adapter = postsAdapter
+}
 
 }
 

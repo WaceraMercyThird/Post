@@ -5,10 +5,13 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ApiInterface {
-    @GET("posts")
+    @GET("/posts")
     fun getPost(): Call<List<Post>>
 
     @GET("/post/{id}")
     fun getPostId(@Path("id")postId:Int): Call<Post>
+
+    @GET("/post/{id}/{comment}")
+    fun getPostComment(@Path("comment")postId:Int): Call<Post>
 
 }
